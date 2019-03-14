@@ -297,36 +297,56 @@ function parseItem(FHIR, nestingNumber) {
     return rv;
 }
 
+var uniqueIds = Array();
+var counter = 0;
 
+function uniquifyId(FHIR) {
+    let FHIRid = '';
+    if(undefined !== FHIR.id) {
+        FHIRid = FHIR.id;
+    } else if (undefined !== FHIR.linkId) {
+        FHIRid = FHIR.linkId;
+    }
+    let id = FHIRid;
+    while(undefined !== uniqueIds[id]) {
+        id = FHIRid + "-" + counter;
+        ++counter;
+        console.log(id);
+    }
+    uniqueIds[id] = id;
+    return id;
+}
 
 function parseFHIR(FHIR, nestingNumber) {
     let rv = `<div class="nest_${nestingNumber}">`;
     if(!FHIR.type) {
-        rv += `<div id="${FHIR.id}" >\n`;
+        let id = uniquifyId(FHIR);
+        rv += `<div id="${id}" >\n`;
         rv += `<h1>`+ getReadable(FHIR) + `</h1>\n`;
         rv += parseItem(FHIR, nestingNumber);
         rv += '</div>\n';
     } else if(FHIR.type == 'choice') {
         rv += `<label>`+getReadable(FHIR)+`</label>\n`;
-        rv += `<select id="${FHIR.linkId}" name="${FHIR.linkId}">\n`;
-        var valueSet = getValueSet(FHIR);
-        var valueKeys = Object.keys(valueSet);
+        let id = uniquifyId(FHIR);
+        rv += `<select id="${id}" name="${id}">\n`;
+        let valueSet = getValueSet(FHIR);
+        let valueKeys = Object.keys(valueSet);
         for(let i = 0; i < valueKeys.length; ++i) {
             rv += `<option value="${valueKeys[i]}">${valueSet[valueKeys[i]]}</option>\n`;
         }
         rv += '</select>\n';
         rv += parseItem(FHIR, nestingNumber);
     } else if (FHIR.type == 'group') {
-        rv += `<label id="${FHIR.linkId}">`+getReadable(FHIR)+`</label>\n`;
+        let id = uniquifyId(FHIR);
+        rv += `<label id="${id}">`+getReadable(FHIR)+`</label>\n`;
         rv += parseItem(FHIR, nestingNumber);
     } else if (FHIR.type == 'string' || FHIR.type == "decimal") {
         rv += `<label>`+getReadable(FHIR)+`</label>\n`;
-        rv += `<input class="input-type-${FHIR.type}" type="text" id="${FHIR.linkId}" name="${FHIR.linkId}" placeholder="type hier een waarde voor `+getReadable(FHIR)+`"/>`;
+        let id = uniquifyId(FHIR);
+        rv += `<input class="input-type-${FHIR.type}" type="text" id="${id}" name="${id}" placeholder="type hier een waarde voor `+getReadable(FHIR)+`"/>`;
     }
     rv += '</div>';
     return rv;
 }
 
    
-
-console.log(parseFHIR(FHIR, 0));
