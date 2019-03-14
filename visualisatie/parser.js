@@ -66,8 +66,13 @@ var FHIR = {
                     }
                   ],
                   "prefix": "1.1",
-                  "type": "choice",
-                  "answerValueSet": "http://hl7.org/fhir/ValueSet/yesnodontknow",
+                    "type": "choice",
+                    "answerOption": [
+                        { "code":"1", "display":"Niet aangetroffen" },
+                        { "code":"2", "display":"Aanwezig" },
+                        { "code":"3", "display":"Dubieus" }
+                    ],  
+
                   "item": [
                     {
                       "linkId": "1.1.1.1.1",
@@ -172,15 +177,17 @@ function getReadable(FHIR) {
 
 
 function getValueSet(FHIR) {
+    let rv = Array();
     if(undefined !== FHIR.answerValueSet && FHIR.answerValueSet == 'http://hl7.org/fhir/ValueSet/yesnodontknow') {
         return { 'Y': 'Yes', 'N': 'No', '?': 'Don\'t know'};
     } else if(undefined !== FHIR.answerOption) {
-        let rv = Array();
+        console.log("Found!, length is: " + FHIR.answerOption.length);
         for(let i = 0; i < FHIR.answerOption.length; ++i) {
+            console.log(FHIR.answerOption[i].code + ": " + i);
             rv[FHIR.answerOption[i].code] = FHIR.answerOption[i].display; 
         }
     }
-    return [];
+    return rv;
 }
 
 function parseItem(FHIR, nestingNumber) {
