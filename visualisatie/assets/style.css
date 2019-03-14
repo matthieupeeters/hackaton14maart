@@ -1,0 +1,17 @@
+select, input, label {
+    float: left;
+    width: 100%
+}
+
+label {
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+    text-transform: capitalize;
+    background: #eee;
+    padding: 5px 0;
+}
+
+input, select {
+    margin-left: 5px;
+    max-width: 400px;
+}
