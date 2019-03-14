@@ -208,7 +208,7 @@ function parseFHIR(FHIR, nestingNumber) {
         rv += `<div id="${FHIR.id}" >\n`;
         rv += `<h1>${FHIR.title}</h1>\n`;
         rv += parseItem(FHIR, nestingNumber);
-        rv += '</div>\n';
+        rv += '</div><br/>\n';
     } else if(FHIR.type == 'choice') {
         rv += `<label>`+getReadable(FHIR)+`</label>\n`;
         rv += `<select id="${FHIR.linkId}" name="${FHIR.linkId}">\n`;
@@ -217,11 +217,11 @@ function parseFHIR(FHIR, nestingNumber) {
         for(let i = 0; i < valueKeys.length; ++i) {
             rv += `<option value="${valueKeys[i]}">${valueSet[valueKeys[i]]}</option>\n`;
         }
-        rv += '</select>\n';
+        rv += '</select><br/>\n';
         rv += parseItem(FHIR, nestingNumber);
         
     } else if (FHIR.type == 'group') {
-        rv += `<label id="${FHIR.linkId}">`+getReadable(FHIR)+`</label>\n`;
+        rv += `<label id="${FHIR.linkId}">`+getReadable(FHIR)+`</label><br/>\n`;
 
         rv += parseItem(FHIR, nestingNumber);
     }
