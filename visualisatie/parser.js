@@ -180,30 +180,22 @@ function getValueSet(FHIR) {
             rv[FHIR.answerOption[i].code] = FHIR.answerOption[i].display; 
         }
     }
-
-    
-      return [];
+    return [];
 }
 
 function parseItem(FHIR, nestingNumber) {
     let rv = '';
     if(FHIR.item) {
-        console.log('Item found');
-           for(let i = 0; i < FHIR.item.length; ++i)
+        for(let i = 0; i < FHIR.item.length; ++i)
         {
-            console.log('Number' + i);
-               rv += parseFHIR(FHIR.item[i], 1+nestingNumber);
-
-            
-
+            rv += parseFHIR(FHIR.item[i], 1+nestingNumber);
         }   
-            
-        }
+    }
     return rv;
 }
 
 function parseFHIR(FHIR, nestingNumber) {
-    let rv = "" ;
+    let rv = `<div class="nest_${nestingNumber}">`;
     if(!FHIR.type) {
         rv += `<div id="${FHIR.id}" >\n`;
         rv += `<h1>${FHIR.title}</h1>\n`;
@@ -219,17 +211,13 @@ function parseFHIR(FHIR, nestingNumber) {
         }
         rv += '</select><br/>\n';
         rv += parseItem(FHIR, nestingNumber);
-        
     } else if (FHIR.type == 'group') {
         rv += `<label id="${FHIR.linkId}">`+getReadable(FHIR)+`</label><br/>\n`;
-
         rv += parseItem(FHIR, nestingNumber);
     }
+    rv += '</div>';
     return rv;
 }
-
-
-
 
    
 
