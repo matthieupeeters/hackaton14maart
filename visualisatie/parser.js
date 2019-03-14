@@ -172,10 +172,17 @@ function getReadable(FHIR) {
 
 
 function getValueSet(FHIR) {
-    if(FHIR.answerValueSet == 'http://hl7.org/fhir/ValueSet/yesnodontknow') {
-        return ['Yes', 'No', 'Don\'t know'];
+    if(undefined !== FHIR.answerValueSet && FHIR.answerValueSet == 'http://hl7.org/fhir/ValueSet/yesnodontknow') {
+        return { 'Y': 'Yes', 'N': 'No', '?': 'Don\'t know'};
+    } else if(undefined !== FHIR.answerOption) {
+        let rv = Array();
+        for(let i = 0; i < FHIR.answerOption.length; ++i) {
+            rv[FHIR.answerOption[i].code] = FHIR.answerOption[i].display; 
+        }
     }
-    return [];
+
+    
+      return [];
 }
 
 function parseItem(FHIR, nestingNumber) {
@@ -201,20 +208,20 @@ function parseFHIR(FHIR, nestingNumber) {
         rv += `<div id="${FHIR.id}" >\n`;
         rv += `<h1>${FHIR.title}</h1>\n`;
         rv += parseItem(FHIR, nestingNumber);
-        rv += '</div>\n';
+        rv += '</div><br/>\n';
     } else if(FHIR.type == 'choice') {
-        
         rv += `<label>`+getReadable(FHIR)+`</label>\n`;
-        rv += `<select id="${FHIR.linkId}">\n`;
+        rv += `<select id="${FHIR.linkId}" name="${FHIR.linkId}">\n`;
         var valueSet = getValueSet(FHIR);
-        for(let i = 0; i < valueSet.length; ++i) {
-            rv += `<option value="${valueSet[i]}">${valueSet[i]}</option>\n`;
+        var valueKeys = Object.keys(valueSet);
+        for(let i = 0; i < valueKeys.length; ++i) {
+            rv += `<option value="${valueKeys[i]}">${valueSet[valueKeys[i]]}</option>\n`;
         }
-        rv += '</select>\n';
+        rv += '</select><br/>\n';
         rv += parseItem(FHIR, nestingNumber);
         
     } else if (FHIR.type == 'group') {
-        rv += `<label id="${FHIR.linkId}">`+getReadable(FHIR)+`</label>\n`;
+        rv += `<label id="${FHIR.linkId}">`+getReadable(FHIR)+`</label><br/>\n`;
 
         rv += parseItem(FHIR, nestingNumber);
     }
@@ -223,12 +230,7 @@ function parseFHIR(FHIR, nestingNumber) {
 
 
 
-console.log("Hallo");
-
-console.log(parseFHIR(FHIR, 0));
-
-
 
    
 
-
+console.log(parseFHIR(FHIR, 0));
