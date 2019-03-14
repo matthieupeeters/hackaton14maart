@@ -319,6 +319,9 @@ function parseFHIR(FHIR, nestingNumber) {
     } else if (FHIR.type == 'group') {
         rv += `<label id="${FHIR.linkId}">`+getReadable(FHIR)+`</label>\n`;
         rv += parseItem(FHIR, nestingNumber);
+    } else if (FHIR.type == 'string' || FHIR.type == "decimal") {
+        rv += `<label>`+getReadable(FHIR)+`</label>\n`;
+        rv += `<input class="input-type-${FHIR.type}" type="text" id="${FHIR.linkId}" name="${FHIR.linkId}" placeholder="type hier een waarde voor `+getReadable(FHIR)+`"/>`;
     }
     rv += '</div>';
     return rv;
