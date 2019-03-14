@@ -1,9 +1,7 @@
 
 
 function fillForm() {
-    document.getElementById("formcontent").innerHTML = parseFHIR(FHIR, 0)
-
-    ;
+    document.getElementById("formcontent").innerHTML = parseFHIR(FHIR, 0);
 }
 
 
@@ -11,3 +9,8 @@ function fillForm() {
 function handleSubmit() {
     document.getElementById("output").innerHTML = FormData(document.querySelector('mainform'));
 }
+
+
+window.addEventListener('load', (event) => {
+    fillForm()
+})
