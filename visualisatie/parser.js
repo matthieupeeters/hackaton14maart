@@ -1,6 +1,6 @@
 
 
-FHIR = {
+var FHIR = {
   "resourceType": "Questionnaire",
   "id": "3141",
   "text": {
@@ -199,7 +199,7 @@ function parseFHIR(FHIR, nestingNumber) {
     let rv = "" ;
     if(!FHIR.type) {
         rv += `<div id="${FHIR.id}" >\n`;
-        rv += `<title>${FHIR.title}</title>\n`;
+        rv += `<h1>${FHIR.title}</h1>\n`;
         rv += parseItem(FHIR, nestingNumber);
         rv += '</div>\n';
     } else if(FHIR.type == 'choice') {
