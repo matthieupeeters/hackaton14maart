@@ -1,160 +1,248 @@
 
 
-var FHIR = {
+var FHIR =
+{
   "resourceType": "Questionnaire",
-  "id": "3141",
-  "text": {
-    "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <pre>\n            1.Comorbidity?\n              1.1 Cardial Comorbidity\n                1.1.1 Angina?\n                1.1.2 MI?\n              1.2 Vascular Comorbidity?\n              ...\n            Histopathology\n              Abdominal\n                pT category?\n              ...\n          </pre>\n    </div>"
-  },
-  "url": "http://hl7.org/fhir/Questionnaire/3141",
-  "title": "Cancer Quality Forum Questionnaire 2012",
   "status": "draft",
-  "subjectType": [
-    "Patient"
-  ],
-  "date": "2012-01",
   "item": [
     {
-      "linkId": "1",
+      "type": "group",
+      "required": false,
+      "linkId": "/mamma",
       "code": [
         {
-          "system": "http://example.org/system/code/sections",
-          "code": "COMORBIDITY"
+          "system": "Custom",
+          "code": "cT",
+          "display": "Mamma"
         }
       ],
-      "type": "group",
+      "text": "Mamma",
       "item": [
         {
-          "linkId": "1.1",
-          "code": [
+          "type": "choice",
+          "extension": [
             {
-              "system": "http://example.org/system/code/questions",
-              "code": "COMORB"
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-answerRepeats",
+              "valueBoolean": true
             }
           ],
-          "prefix": "1",
-          "type": "choice",
-          "answerValueSet": "http://hl7.org/fhir/ValueSet/yesnodontknow",
+          "required": false,
+          "linkId": "/cT/2.16.840.1.113883.2.4.3.11.31.1.77.12.2.10",
+          "code": [
+            {
+              "system": "Custom",
+              "code": "2.16.840.1.113883.2.4.3.11.31.1.77.12.2.10",
+              "display": "Zijde"
+            }
+          ],
+          "text": "Zijde",
+          "repeats": true,
+		  "option": [
+            {
+              "valueCoding": {
+                "code": "21684011138832431131177211717771000",
+                "display": "Links"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "216840111388324311311772117124028007",
+                "display": "Rechts"
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "required": false,
+          "linkId": "/cT/links",
+          "code": [
+            {
+              "system": "Custom",
+              "code": "links",
+              "display": "Links"
+            }
+          ],
+          "text": "Links",
+          "enableWhen": [
+            {
+              "question": "/cT/2.16.840.1.113883.2.4.3.11.31.1.77.12.2.10",
+              "answerCoding": {
+                "code": "21684011138832431131177211717771000"
+              }
+            }
+          ],
           "item": [
             {
-              "linkId": "1.1.1",
-              "code": [
+              "type": "choice",
+              "extension": [
                 {
-                  "system": "http://example.org/system/code/sections",
-                  "code": "CARDIAL"
-                }
-              ],
-              "type": "group",
-              "enableWhen": [
-                {
-                  "question": "1.1",
-                  "operator": "=",
-                  "answerCoding": {
-                    "system": "http://terminology.hl7.org/CodeSystem/v2-0136",
-                    "code": "Y"
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "Combo-box",
+                        "display": "Combo-box"
+                      }
+                    ],
+                    "text": "Combo-box"
                   }
                 }
               ],
-              "item": [
-                {
-                  "linkId": "1.1.1.1",
-                  "code": [
-                    {
-                      "system": "http://example.org/system/code/questions",
-                      "code": "COMORBCAR"
-                    }
-                  ],
-                  "prefix": "1.1",
-                    "type": "choice",
-                    "answerOption": [
-                        { "code":"1", "display":"Niet aangetroffen" },
-                        { "code":"2", "display":"Aanwezig" },
-                        { "code":"3", "display":"Dubieus" }
-                    ],  
-
-                  "item": [
-                    {
-                      "linkId": "1.1.1.1.1",
-                      "code": [
-                        {
-                          "system": "http://example.org/system/code/questions",
-                          "code": "COMCAR00",
-                          "display": "Angina Pectoris"
-                        },
-                        {
-                          "system": "http://snomed.info/sct",
-                          "code": "194828000",
-                          "display": "Angina (disorder)"
-                        }
-                      ],
-                      "prefix": "1.1.1",
-                      "type": "choice",
-                      "answerValueSet": "http://hl7.org/fhir/ValueSet/yesnodontknow"
-                    },
-                    {
-                      "linkId": "1.1.1.1.2",
-                      "code": [
-                        {
-                          "system": "http://snomed.info/sct",
-                          "code": "22298006",
-                          "display": "Myocardial infarction (disorder)"
-                        }
-                      ],
-                      "prefix": "1.1.2",
-                      "type": "choice",
-                      "answerValueSet": "http://hl7.org/fhir/ValueSet/yesnodontknow"
-                    }
-                  ]
-                },
-                {
-                  "linkId": "1.1.1.2",
-                  "code": [
-                    {
-                      "system": "http://example.org/system/code/questions",
-                      "code": "COMORBVAS"
-                    }
-                  ],
-                  "prefix": "1.2",
-                  "type": "choice",
-                  "answerValueSet": "http://hl7.org/fhir/ValueSet/yesnodontknow"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "linkId": "2",
-      "code": [
-        {
-          "system": "http://example.org/system/code/sections",
-          "code": "HISTOPATHOLOGY"
-        }
-      ],
-      "type": "group",
-      "item": [
-        {
-          "linkId": "2.1",
-          "code": [
-            {
-              "system": "http://example.org/system/code/sections",
-              "code": "ABDOMINAL"
-            }
-          ],
-          "type": "group",
-          "item": [
-            {
-              "linkId": "2.1.2",
+              "required": false,
+              "linkId": "/cT/links/2.16.840.1.113883.2.4.3.11.31.1.77.12.2.396",
               "code": [
                 {
-                  "system": "http://example.org/system/code/questions",
-                  "code": "STADPT",
-                  "display": "pT category"
+                  "system": "Custom",
+                  "code": "2.16.840.1.113883.2.4.3.11.31.1.77.12.2.396",
+                  "display": "Lokalisatie (uren)"
                 }
               ],
-              "type": "choice"
+              "text": "Lokalisatie (uren)",
+              "option": [
+                {
+                  "valueCoding": {
+                    "code": "21684011138832431131177211701",
+                    "display": "01.00"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "21684011138832431131177211702",
+                    "display": "02.00"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "2168401113883243113117721170UNK",
+                    "display": "Onbekend"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "decimal",
+              "required": false,
+              "linkId": "/cT/links/2.16.840.1.113883.2.4.3.11.31.1.77.12.2.457",
+              "code": [
+                {
+                  "system": "Custom",
+                  "code": "2.16.840.1.113883.2.4.3.11.31.1.77.12.2.457",
+                  "display": "Diameter"
+                }
+              ],
+              "text": "Diameter"
+            },
+            {
+              "type": "string",
+              "required": false,
+              "linkId": "/cT/links/Toelichting",
+              "code": [
+                {
+                  "system": "Custom",
+                  "code": "Toelichting",
+                  "display": "Toelichting"
+                }
+              ],
+              "text": "Toelichting"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "required": false,
+          "linkId": "/cT/rechts",
+          "code": [
+            {
+              "system": "Custom",
+              "code": "rechts",
+              "display": "Rechts"
+            }
+          ],
+          "text": "Rechts",
+          "enableWhen": [
+            {
+              "question": "/cT/2.16.840.1.113883.2.4.3.11.31.1.77.12.2.10",
+              "answerCoding": {
+                "code": "216840111388324311311772117124028007"
+              }
+            }
+          ],
+          "item": [
+            {
+              "type": "choice",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "Combo-box",
+                        "display": "Combo-box"
+                      }
+                    ],
+                    "text": "Combo-box"
+                  }
+                }
+              ],
+              "required": false,
+              "linkId": "/cT/rechts/2.16.840.1.113883.2.4.3.11.31.1.77.12.2.396",
+              "code": [
+                {
+                  "system": "Custom",
+                  "code": "2.16.840.1.113883.2.4.3.11.31.1.77.12.2.396",
+                  "display": "Lokalisatie (uren)"
+                }
+              ],
+              "text": "Lokalisatie (uren)",
+              "option": [
+                {
+                  "valueCoding": {
+                    "code": "21684011138832431131177211701",
+                    "display": "01.00"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "21684011138832431131177211702",
+                    "display": "02.00"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "2168401113883243113117721170UNK",
+                    "display": "Onbekend"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "decimal",
+              "required": false,
+              "linkId": "/cT/rechts/2.16.840.1.113883.2.4.3.11.31.1.77.12.2.457",
+              "code": [
+                {
+                  "system": "Custom",
+                  "code": "2.16.840.1.113883.2.4.3.11.31.1.77.12.2.457",
+                  "display": "Diameter"
+                }
+              ],
+              "text": "Diameter"
+            },
+            {
+              "type": "string",
+              "required": false,
+              "linkId": "/cT/rechts/Toelichting",
+              "code": [
+                {
+                  "system": "Custom",
+                  "code": "Toelichting",
+                  "display": "Toelichting"
+                }
+              ],
+              "text": "Toelichting"
             }
           ]
         }
@@ -167,13 +255,19 @@ var FHIR = {
 
 
 function getReadable(FHIR) {
-    if(FHIR.code[0].display) {
+    if(undefined !== FHIR.text) {
+        return FHIR.text;
+    } else if(undefined !== FHIR.code && undefined !== FHIR.code[0].display) {
         return FHIR.code[0].display;
-    } else {
+    } else if(undefined !== FHIR.code && undefined !== FHIR.code[0].code) {
         return FHIR.code[0].code;
+    } else if(undefined !== FHIR.resourceType) {
+        return FHIR.resourceType;
+    } else {
+        return "";
     }
-    
 }
+
 
 
 function getValueSet(FHIR) {
@@ -181,10 +275,12 @@ function getValueSet(FHIR) {
     if(undefined !== FHIR.answerValueSet && FHIR.answerValueSet == 'http://hl7.org/fhir/ValueSet/yesnodontknow') {
         return { 'Y': 'Yes', 'N': 'No', '?': 'Don\'t know'};
     } else if(undefined !== FHIR.answerOption) {
-        console.log("Found!, length is: " + FHIR.answerOption.length);
         for(let i = 0; i < FHIR.answerOption.length; ++i) {
-            console.log(FHIR.answerOption[i].code + ": " + i);
             rv[FHIR.answerOption[i].code] = FHIR.answerOption[i].display; 
+        }
+    } else if(undefined !== FHIR.option) {
+        for(let i = 0; i < FHIR.option.length; ++i) {
+            rv[FHIR.option[i].valueCoding.code] = FHIR.option[i].valueCoding.display; 
         }
     }
     return rv;
@@ -201,13 +297,15 @@ function parseItem(FHIR, nestingNumber) {
     return rv;
 }
 
+
+
 function parseFHIR(FHIR, nestingNumber) {
     let rv = `<div class="nest_${nestingNumber}">`;
     if(!FHIR.type) {
         rv += `<div id="${FHIR.id}" >\n`;
-        rv += `<h1>${FHIR.title}</h1>\n`;
+        rv += `<h1>`+ getReadable(FHIR) + `</h1>\n`;
         rv += parseItem(FHIR, nestingNumber);
-        rv += '</div><br/>\n';
+        rv += '</div>\n';
     } else if(FHIR.type == 'choice') {
         rv += `<label>`+getReadable(FHIR)+`</label>\n`;
         rv += `<select id="${FHIR.linkId}" name="${FHIR.linkId}">\n`;
@@ -216,10 +314,10 @@ function parseFHIR(FHIR, nestingNumber) {
         for(let i = 0; i < valueKeys.length; ++i) {
             rv += `<option value="${valueKeys[i]}">${valueSet[valueKeys[i]]}</option>\n`;
         }
-        rv += '</select><br/>\n';
+        rv += '</select>\n';
         rv += parseItem(FHIR, nestingNumber);
     } else if (FHIR.type == 'group') {
-        rv += `<label id="${FHIR.linkId}">`+getReadable(FHIR)+`</label><br/>\n`;
+        rv += `<label id="${FHIR.linkId}">`+getReadable(FHIR)+`</label>\n`;
         rv += parseItem(FHIR, nestingNumber);
     }
     rv += '</div>';
