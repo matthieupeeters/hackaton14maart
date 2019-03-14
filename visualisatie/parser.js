@@ -326,7 +326,7 @@ function parseFHIR(FHIR, nestingNumber) {
         rv += parseItem(FHIR, nestingNumber);
         rv += '</div>\n';
     } else if(FHIR.type == 'choice') {
-        rv += `<label>`+getReadable(FHIR)+`</label>\n`;
+        rv += `<label class="${FHIR.type}-type">`+getReadable(FHIR)+`</label>\n`;
         let id = uniquifyId(FHIR);
         rv += `<select id="${id}" name="${id}">\n`;
         let valueSet = getValueSet(FHIR);
@@ -338,10 +338,10 @@ function parseFHIR(FHIR, nestingNumber) {
         rv += parseItem(FHIR, nestingNumber);
     } else if (FHIR.type == 'group') {
         let id = uniquifyId(FHIR);
-        rv += `<label id="${id}">`+getReadable(FHIR)+`</label>\n`;
+        rv += `<label id="${id}" class="${FHIR.type}-type">`+getReadable(FHIR)+`</label>\n`;
         rv += parseItem(FHIR, nestingNumber);
     } else if (FHIR.type == 'string' || FHIR.type == "decimal") {
-        rv += `<label>`+getReadable(FHIR)+`</label>\n`;
+        rv += `<label class="${FHIR.type}-type">`+getReadable(FHIR)+`</label>\n`;
         let id = uniquifyId(FHIR);
         rv += `<input class="input-type-${FHIR.type}" type="text" id="${id}" name="${id}" placeholder="type hier een waarde voor `+getReadable(FHIR)+`"/>`;
     }
